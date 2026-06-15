@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0e1116" />
+  <title>Faceless Video Trigger</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>🎬 Video Trigger</h1>
+    <button id="settingsBtn" class="ghost" title="Settings">⚙️</button>
+  </header>
+
+  <main>
+    <section id="triggerCard" class="card">
+      <label for="topic">Topic <span class="muted">(optional — blank = auto-pick)</span></label>
+      <textarea id="topic" rows="2" placeholder="e.g. What the Yoga Sutras say about breath — and what science shows"></textarea>
+      <button id="goBtn" class="primary">Generate &amp; Upload Video</button>
+      <p id="status" class="status"></p>
+    </section>
+
+    <section class="card">
+      <div class="row between">
+        <h2>Recent runs</h2>
+        <button id="refreshBtn" class="ghost">↻</button>
+      </div>
+      <ul id="runs" class="runs"><li class="muted">Loading…</li></ul>
+    </section>
+  </main>
+
+  <dialog id="settings">
+    <form method="dialog">
+      <h2>Settings</h2>
+      <label>GitHub token (fine-grained, this repo, Actions: read/write)</label>
+      <input id="cfgToken" type="password" placeholder="github_pat_…" autocomplete="off" />
+      <label>Owner</label>
+      <input id="cfgOwner" type="text" placeholder="shadowversearchieves-lang" />
+      <label>Repo</label>
+      <input id="cfgRepo" type="text" placeholder="faceless-video-pipeline" />
+      <label>Workflow file</label>
+      <input id="cfgWorkflow" type="text" placeholder="auto-video.yml" />
+      <label>Branch</label>
+      <input id="cfgRef" type="text" placeholder="master" />
+      <p class="muted small">Stored only on this device (localStorage). Use a token scoped to just this repo.</p>
+      <div class="row end">
+        <button value="cancel" class="ghost">Cancel</button>
+        <button id="saveCfg" value="default" class="primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

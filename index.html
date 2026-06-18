@@ -18,8 +18,13 @@
 
   <main>
     <section id="triggerCard" class="card">
+      <label>Format</label>
+      <div class="seg" id="formatSeg">
+        <button type="button" class="seg-btn active" data-fmt="shorts">Shorts</button>
+        <button type="button" class="seg-btn" data-fmt="long">Long</button>
+      </div>
       <label for="topic">Topic <span class="muted">(optional — blank = auto-pick)</span></label>
-      <textarea id="topic" rows="2" placeholder="e.g. What the Yoga Sutras say about breath — and what science shows"></textarea>
+      <textarea id="topic" rows="2" placeholder="e.g. Why the brain forgets names — and the fix"></textarea>
       <button id="goBtn" class="primary">Generate &amp; Upload Video</button>
       <p id="status" class="status"></p>
     </section>

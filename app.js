@@ -33,16 +33,20 @@ function setStatus(msg, kind = "") {
   el.className = "status " + kind;
 }
 
+let selectedFormat = "shorts";
+
 async function trigger() {
   const c = cfg();
   if (!c.token) { openSettings(); return setStatus("Add a GitHub token first.", "err"); }
   const topic = $("topic").value.trim();
+  const inputs = { format: selectedFormat };
+  if (topic) inputs.topic = topic;
   $("goBtn").disabled = true;
-  setStatus("Triggering…");
+  setStatus(`Triggering ${selectedFormat}…`);
   try {
     const res = await gh(
       `/repos/${c.owner}/${c.repo}/actions/workflows/${c.workflow}/dispatches`,
-      { method: "POST", body: JSON.stringify({ ref: c.ref, inputs: topic ? { topic } : {} }) }
+      { method: "POST", body: JSON.stringify({ ref: c.ref, inputs }) }
     );
     if (res.status === 204) {
       setStatus("✓ Triggered! A new video is being built (~15 min).", "ok");
@@ -99,6 +103,14 @@ function openSettings() {
   $("cfgRef").value = c.ref;
   $("settings").showModal();
 }
+
+document.querySelectorAll(".seg-btn").forEach((b) => {
+  b.onclick = () => {
+    document.querySelectorAll(".seg-btn").forEach((x) => x.classList.remove("active"));
+    b.classList.add("active");
+    selectedFormat = b.dataset.fmt;
+  };
+});
 
 $("goBtn").onclick = trigger;
 $("refreshBtn").onclick = loadRuns;

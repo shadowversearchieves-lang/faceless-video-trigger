@@ -1,5 +1,5 @@
 // Simple app-shell cache. API calls (api.github.com) always go to the network.
-const CACHE = "vt-shell-v1";
+const CACHE = "vt-shell-v2";
 const SHELL = [
   ".", "index.html", "styles.css", "app.js",
   "manifest.webmanifest", "icon-192.png", "icon-512.png",

@@ -32,6 +32,10 @@ button { border: 0; border-radius: 10px; padding: 12px 14px; font-size: 15px; cu
 .end { justify-content: flex-end; }
 .muted { color: var(--muted); }
 .small { font-size: 12px; }
+.seg { display: flex; gap: 6px; background: #0d1117; border: 1px solid var(--line);
+  border-radius: 10px; padding: 4px; }
+.seg-btn { flex: 1; background: transparent; color: var(--muted); padding: 9px; font-weight: 600; }
+.seg-btn.active { background: var(--accent); color: #1a1300; border-radius: 7px; }
 .status { margin: 12px 0 0; font-size: 14px; min-height: 18px; }
 .status.ok { color: var(--accent2); }
 .status.err { color: var(--danger); }

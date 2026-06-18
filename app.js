@@ -39,10 +39,11 @@ async function trigger() {
   const c = cfg();
   if (!c.token) { openSettings(); return setStatus("Add a GitHub token first.", "err"); }
   const topic = $("topic").value.trim();
-  const inputs = { format: selectedFormat };
+  const trending = $("trending").checked;
+  const inputs = { format: selectedFormat, mode: trending ? "trending" : "evergreen" };
   if (topic) inputs.topic = topic;
   $("goBtn").disabled = true;
-  setStatus(`Triggering ${selectedFormat}…`);
+  setStatus(`Triggering ${selectedFormat}${trending && !topic ? " · trending" : ""}…`);
   try {
     const res = await gh(
       `/repos/${c.owner}/${c.repo}/actions/workflows/${c.workflow}/dispatches`,

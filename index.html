@@ -25,6 +25,11 @@
       </div>
       <label for="topic">Topic <span class="muted">(optional — blank = auto-pick)</span></label>
       <textarea id="topic" rows="2" placeholder="e.g. Why the brain forgets names — and the fix"></textarea>
+      <label class="toggle">
+        <input type="checkbox" id="trending" />
+        <span>🗞️ Latest trending news <span class="muted">(reputable sources only)</span></span>
+      </label>
+      <p class="muted small">Off = timeless topic. On = a recent item from outlets like Nature, NASA, BBC, Reuters; still fact-checked, with the source link in the description. Ignored when you type your own topic.</p>
       <button id="goBtn" class="primary">Generate &amp; Upload Video</button>
       <p id="status" class="status"></p>
     </section>

@@ -95,6 +95,26 @@ async function loadRuns() {
   }
 }
 
+async function loadCovers() {
+  const c = cfg();
+  const ul = $("covers");
+  if (!c.token) { ul.innerHTML = '<li class="muted">Add a token in ⚙️ settings.</li>'; return; }
+  try {
+    const res = await gh(`/repos/${c.owner}/${c.repo}/contents/covers.json`,
+                         { headers: { Accept: "application/vnd.github.raw" } });
+    if (res.status === 404) { ul.innerHTML = '<li class="muted">No covers yet.</li>'; return; }
+    if (!res.ok) { ul.innerHTML = `<li class="muted">Error ${res.status}</li>`; return; }
+    const data = await res.json();
+    const esc = (t) => (t || "").replace(/[&<>]/g, (x) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[x]));
+    ul.innerHTML = data.slice().reverse().map((c2) =>
+      `<li><span>${esc(c2.title.slice(0, 30))}</span>
+        <a href="${c2.url}" target="_blank" rel="noopener" download class="dlbtn">⬇ 9:16</a></li>`
+    ).join("") || '<li class="muted">No covers yet.</li>';
+  } catch (e) {
+    ul.innerHTML = `<li class="muted">${e.message}</li>`;
+  }
+}
+
 function openSettings() {
   const c = cfg();
   $("cfgToken").value = c.token;
@@ -115,6 +135,7 @@ document.querySelectorAll(".seg-btn").forEach((b) => {
 
 $("goBtn").onclick = trigger;
 $("refreshBtn").onclick = loadRuns;
+$("coversBtn").onclick = loadCovers;
 $("settingsBtn").onclick = openSettings;
 $("saveCfg").onclick = () => {
   saveCfg({
@@ -128,5 +149,6 @@ $("saveCfg").onclick = () => {
 };
 
 loadRuns();
+loadCovers();
 setInterval(loadRuns, 20000); // auto-refresh status
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");

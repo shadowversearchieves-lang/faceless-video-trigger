@@ -102,7 +102,8 @@ async function loadCovers() {
   try {
     const res = await gh(`/repos/${c.owner}/${c.repo}/contents/covers.json`,
                          { headers: { Accept: "application/vnd.github.raw" } });
-    if (res.status === 404) { ul.innerHTML = '<li class="muted">No covers yet.</li>'; return; }
+    if (res.status === 404) { ul.innerHTML = '<li class="muted">No covers yet — run a Short first, then tap ↻.</li>'; return; }
+    if (res.status === 403 || res.status === 401) { ul.innerHTML = `<li class="muted">Token can't read files (${res.status}). Give your GitHub token <b>Contents: Read</b> (fine-grained) or use a classic token with <b>repo</b> scope, then re-save it in ⚙️ settings.</li>`; return; }
     if (!res.ok) { ul.innerHTML = `<li class="muted">Error ${res.status}</li>`; return; }
     const data = await res.json();
     const esc = (t) => (t || "").replace(/[&<>]/g, (x) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[x]));
